@@ -13,4 +13,4 @@ class JobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ['job_id', 'created_at', 'tasks']
+        fields = '__all__'

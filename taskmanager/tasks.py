@@ -2,14 +2,13 @@
 
 from celery import shared_task
 from .models import Job, Task
-from .coinmarketcap import CoinMarketCap
-
+from .coinmarketcap import CoinMarketCapScraper
 from django.core.exceptions import ValidationError
 
 @shared_task
 def scrape_coin_data(coin_name):
     job_id = job_id
-    scraped_data = CoinMarketCap.scrape_data(coin_name)
+    scraped_data = CoinMarketCapScraper.scrape_data(job_id, coin_name)
     if scraped_data:
         Task.objects.create(
             coin_name=coin_name,
@@ -29,7 +28,7 @@ def scrape_coin_data(coin_name):
 @shared_task
 def start_scraping(coins):
     try:
-        CoinMarketCap.validate_coins(coins)
+        CoinMarketCapScraper.validate_coins(coins)
         job = Job.objects.create(coins=coins)
         for coin in coins:
             scrape_coin_data.delay(coin)

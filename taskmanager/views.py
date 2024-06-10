@@ -14,16 +14,17 @@ class StartScrapingView(APIView):
         if not isinstance(coins, list):
             return Response({'error': 'Invalid input. Expected a list of coin acronyms.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Submit scraping job for each coin
+        job = Job.objects.create(coins=coins)
+      
+
          # Generate a unique job ID
         for coin in coins:
-            scrape_coin_data.delay(job_id, coin)
+            scrape_coin_data.delay(job.job_id, coin)
+            
+        
+          
 
-        # Create a Job record in the database
-        job = Job.objects.create(coins=coins)
-        job_id = job.job_id     
-
-        return Response({'job_id': job_id}, status=status.HTTP_202_ACCEPTED)
+        return Response({'job_id': job.job_id}, status=status.HTTP_202_ACCEPTED)
 
 class ScrapingStatusView(APIView):
     def get(self, request, job_id):
