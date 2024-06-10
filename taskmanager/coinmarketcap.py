@@ -55,7 +55,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-class CoinMarketCapScraper:
+class CoinMarketCap:
     BASE_URL = 'https://coinmarketcap.com/'
 
     def __init__(self):
@@ -65,7 +65,7 @@ class CoinMarketCapScraper:
         service = Service(ChromeDriverManager().install())
         return webdriver.Chrome(service=service)
 
-    def scrape_data(self, coin_name):
+    def scrape_data(self,coin_name):
         url = f'{self.BASE_URL}currencies/{coin_name}/'
         self.driver.get(url)
         

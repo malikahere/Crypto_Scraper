@@ -13,7 +13,7 @@ class Job(models.Model):
 
 class Task(models.Model):
     coin_name = models.CharField(max_length=100)
-    job = models.ForeignKey(Job, related_name='tasks', on_delete=models.CASCADE)
+    job_id = models.ForeignKey(Job, related_name='tasks', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=20, decimal_places=10)
     price_change = models.DecimalField(max_digits=10, decimal_places=2)
     market_cap = models.BigIntegerField()

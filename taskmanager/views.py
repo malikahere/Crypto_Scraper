@@ -22,7 +22,7 @@ class StartScrapingView(APIView):
             scrape_coin_data.delay(job.job_id, coin)
             
         
-          
+            
 
         return Response({'job_id': job.job_id}, status=status.HTTP_202_ACCEPTED)
 
